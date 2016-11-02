@@ -54,17 +54,18 @@
 			  $.ajax({
 				   type: "GET",
 				   url: "/rest/item/param/" + node.id,
-				   success: function(data){
-					   if(data){
-						  $.messager.alert("提示", "该类目已经添加，请选择其他类目。", undefined, function(){
-							 $("#itemParamAddTable .selectItemCat").click();
-						  });
-						  return ;
-					  }
-					  $(".addGroupTr").show();
-				   },
-				   error: function(){
-					   alert("error");
+				   statusCode:{
+					   200: function(){
+						   $.messager.alert("提示", "该类目已经添加，请选择其他类目。", undefined, function(){
+								 $("#itemParamAddTable .selectItemCat").click();
+							  });
+					   },
+					   404: function(){
+							  $(".addGroupTr").show();
+					   },
+					   500: function(){
+						   alert("error");
+					   }
 				   }
 				});
 			}
@@ -92,6 +93,7 @@
 		$("#itemParamAddTable .submit").click(function(){
 			var params = [];
 			var groups = $("#itemParamAddTable [name=group]");
+			//根据输入的内容构建js对象，最后转成一个json的字符串提交
 			groups.each(function(i,e){
 				var p = $(e).parentsUntil("ul").parent().find("[name=param]");
 				var _ps = [];
@@ -110,6 +112,7 @@
 				}
 			});
 			var url = "/rest/item/param/"+$("#itemParamAddTable [name=cid]").val();
+			//JSON 浏览器内置对象
 			$.post(url,{"paramData":JSON.stringify(params)},function(data){
 				$.messager.alert('提示','新增商品规格成功!',undefined,function(){
 					$(".panel-tool-close").click();

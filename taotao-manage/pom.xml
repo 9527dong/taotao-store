@@ -18,6 +18,11 @@
 	</modules>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.taotao.common</groupId>
+			<artifactId>taotao-common</artifactId>
+			<version>1.0.0-SNAPSHOT</version> 
+		</dependency>
 		<!-- 单元测试 -->
 		<dependency>
 			<groupId>junit</groupId>

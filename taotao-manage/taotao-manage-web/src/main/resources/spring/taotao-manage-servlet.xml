@@ -9,7 +9,17 @@
 
 	<!-- 1. 注解驱动：dispatcherServlet.properties默认配置了mvc的一些信息，是默认配置的升级版(RequestMappingHandlerMapping) -->
 	<!-- 不是必须的，是 是默认配置的升级版，是为了使用一些更好的方法-->
-	<mvc:annotation-driven/>
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+			<!-- 自定义String类型的消息转换器 -->
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg index="0" value="UTF-8"></constructor-arg>
+			</bean>
+			<bean class="com.taotao.common.spring.extend.converter.json.CallbackMappingJackson2HttpMessageConverter">
+				<property name="callbackName" value="callback"></property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 	
 	<!-- 2. 扫描Controller -->
 	<!-- 问题：在Spring的配置文件中已经添加了扫描包，这里有配置了一个扫描包，是否可以省略？ -->
@@ -24,5 +34,10 @@
 		<property name="prefix" value="/WEB-INF/views/"/>
 		<property name="suffix" value=".jsp"/>
 	</bean>
-
+	
+	<!-- 文件上传解析器 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 限制文件的最大大小为5mb -->
+		<property name="maxUploadSize" value="5242880"></property>
+	</bean>
 </beans>
