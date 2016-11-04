@@ -16,7 +16,7 @@
 		<module>taotao-manage-service</module>
 		<module>taotao-manage-web</module>
 	</modules>
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.taotao.common</groupId>

@@ -93,9 +93,12 @@ var contentListToolbar = [{
     	}
     	$.messager.confirm('确认','确定删除ID为 '+ids+' 的内容吗？',function(r){
     	    if (r){
-    	    	var params = {"ids":ids};
-            	$.post("/rest/content/delete",params, function(data){
-        			if(data.status == 200){
+    	    	var params = {"ids":ids,"_method":"DELETE"};
+            	$.post("/rest/content",params, function(data){
+            		alert(1);
+            		alert(data);
+            		console.log(data);
+        			if(data.statusCode == 204){
         				$.messager.alert('提示','删除内容成功!',undefined,function(){
         					$("#contentList").datagrid("reload");
         				});

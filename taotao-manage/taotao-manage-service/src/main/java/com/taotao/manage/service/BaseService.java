@@ -107,11 +107,11 @@ public abstract class BaseService<T extends BasePojo> {
 	/**
 	 * 批量删除数据
 	 */
-	public  Integer deleteByIds(List<Object> ids, Class<?> clazz, String property){
+	public  Integer deleteByIds(List<Object> ids, Class<T> clazz, String property){
 		Example example = new Example(clazz);
 		//设置条件
 		example.createCriteria().andIn(property, ids);
-		return this.mapper.deleteByPrimaryKey(example);
+		return this.mapper.deleteByExample(example);
 	}
 	/**
 	 * 根据条件来删除数据
