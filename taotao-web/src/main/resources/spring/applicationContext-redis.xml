@@ -7,25 +7,19 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 	
-	<!-- 1. 读取外部配置文件，使用spring自带的占位符替换功能 -->
-	<bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<!-- 允许JVM参数覆盖 -->
-		<!-- java -Djdbc.url=123 -jar xxx.jar -->
-		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-		<!-- 忽略没有找到的资源文件 -->
-		<property name="ignoreResourceNotFound" value="true" />
-		<!-- 配置资源文件 -->
-		<property name="locations">
-			<list>
-				<value>classpath:env.properties</value>
-				<value>classpath:httpclient.properties</value>
-				<value>classpath:redis.properties</value>
-			</list>
-		</property>
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxTotal" value="${redis.maxTotal}"></property>
 	</bean>
 	
-	<!-- 2. 扫描包：扫描已经标记了Spring注解的类 -->
-	<context:component-scan base-package="com.taotao"/>
-
+	<bean class="redis.clients.jedis.ShardedJedisPool">
+		<constructor-arg index="0" ref="jedisPoolConfig"></constructor-arg>
+		<constructor-arg index="1">
+			<list>
+				<bean class="redis.clients.jedis.JedisShardInfo">
+					<constructor-arg index="0" value="${redis.node1.host}"></constructor-arg>
+					<constructor-arg index="1" value="${redis.node1.port}"></constructor-arg>
+				</bean>
+			</list>
+		</constructor-arg>
+	</bean>
 </beans>
