@@ -1,4 +1,4 @@
-package com.taotao.web.httpClient;
+package com.taotao.common.httpclient;
 
 public class HttpResult {
 	private Integer code;

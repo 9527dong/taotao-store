@@ -1,4 +1,4 @@
-package com.taotao.web.httpClient;
+package com.taotao.common.httpclient;
 
 import org.apache.http.conn.HttpClientConnectionManager;
 

@@ -1,4 +1,4 @@
-package com.taotao.web.service;
+package com.taotao.common.service;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
@@ -15,7 +16,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.BeansException;
@@ -24,12 +24,13 @@ import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.taotao.web.httpClient.HttpResult;
+import com.taotao.common.httpclient.HttpResult;
+
 
 @Service
 public class ApiService implements BeanFactoryAware {
 	
-	@Autowired
+	@Autowired(required = false)
 	private RequestConfig requestConfig;
 	
 	private BeanFactory beanFactory;

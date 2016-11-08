@@ -72,4 +72,34 @@ public class RedisService {
             }
         }
 	}
+
+	public Long del(String key) {
+		// 定义集群连接池
+        ShardedJedis shardedJedis = null;
+        try {
+            // 从连接池中获取到jedis分片对象
+            shardedJedis = shardedJedisPool.getResource();
+            return shardedJedis.del(key);
+        } finally {
+            if (null != shardedJedis) {
+                // 关闭，检测连接是否有效，有效则放回到连接池中，无效则重置状态
+                shardedJedis.close();
+            }
+        }
+	}
+
+	public void expire(String key, Integer redisTime) {
+		// 定义集群连接池
+        ShardedJedis shardedJedis = null;
+        try {
+            // 从连接池中获取到jedis分片对象
+            shardedJedis = shardedJedisPool.getResource();
+            shardedJedis.expire(key, redisTime);
+        } finally {
+            if (null != shardedJedis) {
+                // 关闭，检测连接是否有效，有效则放回到连接池中，无效则重置状态
+                shardedJedis.close();
+            }
+        }
+	}
 }

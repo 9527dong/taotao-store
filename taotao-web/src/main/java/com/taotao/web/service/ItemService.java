@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.taotao.common.service.ApiService;
 import com.taotao.common.service.RedisService;
 import com.taotao.manage.pojo.ItemDesc;
 import com.taotao.manage.pojo.ItemParamItem;
@@ -26,7 +27,7 @@ public class ItemService {
 	@Autowired
 	private RedisService redisServices;
 	
-	private static final String REDIS_EKY = "TAOTAO_WEB_ITEM_DETAIL_";
+	public static final String REDIS_EKY = "TAOTAO_WEB_ITEM_DETAIL_";
 	private static final Integer REDIS_TIME = 60*60*24;
 	/**
 	 * 根据商品id查询商品数据
