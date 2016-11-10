@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
@@ -15,6 +14,8 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -100,6 +101,39 @@ public class ApiService implements BeanFactoryAware {
         	UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(parameters);
         	// 将请求实体设置到httpPost对象中
         	httpPost.setEntity(formEntity);
+        }
+        
+
+        CloseableHttpResponse response = null;
+        try {
+            // 执行请求
+            response = gethttpClient().execute(httpPost);
+            
+            return new HttpResult(response.getStatusLine().getStatusCode(), EntityUtils.toString(response.getEntity(), "UTF-8"));
+        } finally {
+            if (response != null) {
+                response.close();
+            }
+        }
+	}
+	/**
+	 * 封装带有参数的post请求
+	 * @param url
+	 * @param params
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public HttpResult doPostJson(String url, String Json) throws ClientProtocolException, IOException{
+        // 创建http POST请求
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setConfig(this.requestConfig);
+        
+        if(null != Json){
+        	StringEntity stringEntity = new StringEntity(Json, ContentType.APPLICATION_JSON);
+        	// 构造一个form表单式的实体
+        	// 将请求实体设置到httpPost对象中
+        	httpPost.setEntity(stringEntity);
         }
         
 

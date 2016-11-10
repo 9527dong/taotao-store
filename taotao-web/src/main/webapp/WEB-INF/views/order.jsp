@@ -34,7 +34,7 @@
 			<input type="hidden" name="orderItems[0].price" value="${item.price}"/>
 			<input type="hidden" name="orderItems[0].totalFee" value="${item.price}"/>
 			<input type="hidden" name="orderItems[0].title" value="${item.title}"/>
-			<input type="hidden" name="orderItems[0].picPath" value="${item.image}"/>
+			<input type="hidden" name="orderItems[0].picPath" value="${item.images[0]}"/>
 		<input type="hidden" name="payment" value="<fmt:formatNumber groupingUsed="false" maxFractionDigits="2" minFractionDigits="2" value="${totalPrice/100 }"/>"/>
 		<input type="hidden" name="orderShipping.receiverName" value="花和尚"/>
 		<input type="hidden" name="orderShipping.receiverMobile" value="15800000000"/>

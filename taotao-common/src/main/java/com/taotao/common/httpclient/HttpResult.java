@@ -2,7 +2,7 @@ package com.taotao.common.httpclient;
 
 public class HttpResult {
 	private Integer code;
-	private String data;
+	private String body;
 	
 	public Integer getCode() {
 		return code;
@@ -10,16 +10,16 @@ public class HttpResult {
 	public void setCode(Integer code) {
 		this.code = code;
 	}
-	public String getData() {
-		return data;
+	public String getBody() {
+		return body;
 	}
-	public void setData(String data) {
-		this.data = data;
+	public void setBody(String body) {
+		this.body = body;
 	}
-	public HttpResult(Integer code, String data) {
+	public HttpResult(Integer code, String body) {
 		super();
 		this.code = code;
-		this.data = data;
+		this.body = body;
 	}
 	public HttpResult() {
 		super();

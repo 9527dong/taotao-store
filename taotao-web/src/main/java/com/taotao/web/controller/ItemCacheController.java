@@ -18,7 +18,7 @@ public class ItemCacheController {
 	@Autowired
 	private RedisService redisService;
 	/**
-	 * 接受商品id，删除对应的缓存数据
+	 * 接收商品id，删除对应的缓存数据
 	 * 
 	 * @return
 	 */

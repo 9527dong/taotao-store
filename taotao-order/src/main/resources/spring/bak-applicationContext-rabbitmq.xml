@@ -1,0 +1,21 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/rabbit
+	http://www.springframework.org/schema/rabbit/spring-rabbit-1.4.xsd
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+	<!-- 连接工厂 -->
+	<rabbit:connection-factory id="connectionFactory"
+		host="${rabbitmq.host}" port="${rabbitmq.port}" username="${rabbitmq.username}"
+		password="${rabbitmq.passwd}" virtual-host="${rabbitmq.vhost}" />
+
+	<rabbit:template id="rabbitTemplate"
+		connection-factory="connectionFactory" exchange="taotao-order-success" />
+
+	<rabbit:admin connection-factory="connectionFactory" />
+
+	<!-- 定义交换机 -->
+	<rabbit:fanout-exchange name="taotao-order-success" auto-declare="true" />
+
+</beans>

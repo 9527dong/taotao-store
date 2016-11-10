@@ -140,6 +140,11 @@ public class UserController {
 		}
 		return result;
 	}
+	/**
+	 * 根据token查询用户信息
+	 * @param token
+	 * @return
+	 */
 	@RequestMapping(value = "{token}", method = RequestMethod.GET)
 	public ResponseEntity<User> queryUserByToken(@PathVariable("token") String token){
 		try {
@@ -154,4 +159,37 @@ public class UserController {
 		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 	}
+	
+	/**
+	 * 退出登录
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	public Map<String, Object> deleteUserByToken(HttpServletRequest request, HttpServletResponse response){
+		Map<String, Object> result = new HashMap<String, Object>();
+		String token = CookieUtils.getCookieValue(request, COOKIE_NAME);
+		String loginUrl = "http://sso.taotao.com/user/login.html";
+		
+		try {
+			if(StringUtils.isEmpty(token)){
+				//退出登录失败
+				result.put("status", 500);
+				return result;
+			}
+			this.userService.dologout(token);
+			//登录成功，保存token 到 cookie
+			//删除cookie
+			CookieUtils.deleteCookie(request, response, COOKIE_NAME);
+			//未登录，需要跳转到登录页面
+			response.sendRedirect(loginUrl);
+			result.put("status", 200);
+		} catch (Exception e) {
+			e.printStackTrace();
+			//登录失败
+			result.put("status", 500);
+		}
+		return result;
+	} 
 }

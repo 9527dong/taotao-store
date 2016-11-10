@@ -54,7 +54,13 @@ public class UserService {
 		return this.userMapper.insert(user) == 1;
 	}
 
-
+	/**
+	 * 登录
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws Exception
+	 */
 	public String doLogin(String username, String password) throws Exception {
 		
 		User record = new User();
@@ -74,7 +80,16 @@ public class UserService {
 		this.redisService.set("TOKEN_" + key , MAPPER.writeValueAsString(user), REDIS_TIME);
 		return key;
 	}
-
+	/**
+	 * 登出
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws Exception
+	 */
+	public Boolean dologout(String token) throws Exception {
+		return this.redisService.del("TOKEN_" + token) == 1 ? true : false;
+	}
 	/**
 	 * 根据token查询用户信息
 	 * @param token
