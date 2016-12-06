@@ -9,7 +9,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.taotao.common.utils.CookieUtils;
-import com.taotao.web.bean.User;
+import com.taotao.sso.query.bean.User;
 import com.taotao.web.service.UserService;
 import com.taotao.web.threadlocal.UserThreadLocal;
 /**

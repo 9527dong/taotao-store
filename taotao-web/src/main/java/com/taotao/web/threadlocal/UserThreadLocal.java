@@ -1,6 +1,7 @@
 package com.taotao.web.threadlocal;
 
-import com.taotao.web.bean.User;
+import com.taotao.sso.query.bean.User;
+
 /**
  * 通过线程来存储user对象，防止2次查询
  * @author Dong

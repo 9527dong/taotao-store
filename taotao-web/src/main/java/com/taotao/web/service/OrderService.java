@@ -1,21 +1,16 @@
 package com.taotao.web.service;
 
-import java.io.IOException;
-
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.client.ClientProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taotao.common.httpclient.HttpResult;
 import com.taotao.common.service.ApiService;
+import com.taotao.sso.query.bean.User;
 import com.taotao.web.bean.Order;
-import com.taotao.web.bean.User;
 import com.taotao.web.threadlocal.UserThreadLocal;
 
 @Service

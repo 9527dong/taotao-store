@@ -5,7 +5,7 @@ var TT = TAOTAO = {
 			return ;
 		}
 		$.ajax({
-			url : "http://sso.taotao.com/service/user/" + _token,
+			url : "http://ssoquery.taotao.com/user/" + _token,
 			dataType : "jsonp",
 			type : "GET",
 			success : function(data){

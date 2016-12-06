@@ -1,0 +1,29 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.4.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- 定义RabbitMQ的连接工厂 -->
+	<rabbit:connection-factory id="connectionFactory"
+		host="${rabbitmq.host}" port="${rabbitmq.port}" username="${rabbitmq.username}"
+		password="${rabbitmq.password}" virtual-host="${rabbitmq.vhost}" />
+
+	<!-- 管理 -->
+	<rabbit:admin connection-factory="connectionFactory" />
+	
+	<!-- 定义队列 -->
+	<rabbit:queue name="TAOTAO-WEB-ITEM-QUEUE" auto-declare="true" durable="true"></rabbit:queue>
+	
+	<!-- 消费者对象 -->
+	<bean id="itemMQHandler" class="com.taotao.web.mq.handler.ItemMQHandler"></bean>
+	
+	<rabbit:listener-container connection-factory="connectionFactory">
+		<rabbit:listener ref="itemMQHandler"  method="execute" queue-names="TAOTAO-WEB-ITEM-QUEUE"/>
+	</rabbit:listener-container>
+</beans>

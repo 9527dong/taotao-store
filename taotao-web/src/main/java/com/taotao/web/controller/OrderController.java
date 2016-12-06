@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.taotao.web.bean.Item;
 import com.taotao.web.bean.Order;
-import com.taotao.web.bean.User;
 import com.taotao.web.interceptors.UserLoginHandlerInterceptor;
 import com.taotao.web.service.ItemService;
 import com.taotao.web.service.OrderService;

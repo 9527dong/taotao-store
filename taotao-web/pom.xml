@@ -17,9 +17,15 @@
 			<artifactId>taotao-common</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.taotao.manage</groupId>
 			<artifactId>taotao-manage-pojo</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.taotao.sso.query</groupId>
+			<artifactId>taotao-sso-query-api</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<!-- 单元测试 -->
@@ -84,6 +90,34 @@
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit</artifactId>
+			<version>1.4.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<version>2.5.3</version>
+			<exclusions>
+				<exclusion>
+					<!-- 排除传递spring依赖 -->
+					<artifactId>spring</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+			<version>3.3.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.sgroschupf</groupId>
+			<artifactId>zkclient</artifactId>
+			<version>0.1</version>
 		</dependency>
 	</dependencies>
 
