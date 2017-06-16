@@ -62,8 +62,9 @@ public class ItemController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<EasyUIResult> queryItemList(@RequestParam(value = "page", defaultValue = "1") Integer page, 
-			@RequestParam(value = "page", defaultValue = "30") Integer rows){
+			@RequestParam(value = "rows", defaultValue = "30") Integer rows){
 		 try {
+		 	LOGGER.info("查询第"+page+"页， 每页显示"+rows+"条");
 			return ResponseEntity.ok(this.itemService.queryItemList(page, rows));
 		} catch (Exception e) {
 			LOGGER.error("查询商品列表出错！ page = " + page + ", rows = " + rows, e);
