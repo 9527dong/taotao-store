@@ -22,7 +22,6 @@ public class ApiItemCatController {
 	
 	/**
 	 * 对外提供接口数据，查询所有类目数据
-	 *TODO:JSONP
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
