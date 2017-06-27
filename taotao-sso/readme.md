@@ -42,3 +42,8 @@
 |  参数说明 |   |
 | 示例  |  http://sso.taotao.com/user/fe5cb546aeb3ce1bf37abcb08a40493e |
 | 返回值  | {status: 200,<br>msg: "OK",<br>data: "{"id":1,"username":"zhangzhijun","phone":"15800807944", "email":"420840806@qq.com","created":1414119176000,"updated":1414119179000}"}|
+
+## 知识点
+注册时的数据校验使用的是[Hibernate Validator](http://hibernate.org/validator/)。
+token 是"TOKEN_"+username+sysdate md5加密后的字符串。
+将token作为redis中的key，user对象转换为json作为redis中的value。保存的时间为30分钟。

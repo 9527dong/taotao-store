@@ -82,9 +82,8 @@ public class UserService {
 	}
 	/**
 	 * 登出
-	 * @param username
-	 * @param password
-	 * @return
+     * @param token
+	 * @return boolean
 	 * @throws Exception
 	 */
 	public Boolean dologout(String token) throws Exception {
