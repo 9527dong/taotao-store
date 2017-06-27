@@ -122,6 +122,7 @@ public class UserController {
 				String msg = objectError.getDefaultMessage();
 				msgs.add(msg);
 			}
+			//使用StringUtils.join()方法将list集合中的数据输出，并使用'|'分割
 			result.put("data", "参数有误!" + StringUtils.join(msgs, '|'));
 			
 			return result;
