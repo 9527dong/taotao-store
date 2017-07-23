@@ -42,7 +42,6 @@
         text:'编辑',
         iconCls:'icon-edit',
         handler:function(){
-        	debugger;
         	var ids = getSelectionsIds();
         	if(ids.length == 0){
         		$.messager.alert('提示','必须选择一个商品才能编辑!');
@@ -63,8 +62,13 @@
         			
         			// 加载商品描述
         			$.getJSON('/rest/item/desc/'+data.id,function(_data){
+        			    //
         				itemEditEditor.html(_data.itemDesc);
         			});
+                    // 加载商品类别描述
+                    $.getJSON('/rest/item/cat/'+data.cid,function(_data){
+                        data.cName = _data.name;
+                    });
         			
         			//加载商品规格
         			$.getJSON('/rest/item/param/item/'+data.id,function(_data){
@@ -95,6 +99,7 @@
         			TAOTAO.init({
         				"pics" : data.image,
         				"cid" : data.cid,
+                        "cName":data.cName,
         				fun:function(node){
         					TAOTAO.changeItemParam(node, "itemeEditForm");
         				}
