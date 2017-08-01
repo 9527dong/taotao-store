@@ -37,8 +37,6 @@ public class ItemCatService extends BaseService<ItemCat> {
 	// @Override
 	// public Mapper<ItemCat> getMapper() {
 	// return this.itemCatMapper;
-	// }
-	// TODO ItemCatService代码建议自己实现
 
 	@Autowired
 	private RedisService redisService;

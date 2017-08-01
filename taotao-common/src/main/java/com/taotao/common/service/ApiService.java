@@ -27,7 +27,9 @@ import org.springframework.stereotype.Service;
 
 import com.taotao.common.httpclient.HttpResult;
 
-
+/**
+ * 通过的HttpClient api方法
+ */
 @Service
 public class ApiService implements BeanFactoryAware {
 	
@@ -119,7 +121,7 @@ public class ApiService implements BeanFactoryAware {
 	/**
 	 * 封装带有参数的post请求
 	 * @param url
-	 * @param params
+	 * @param Json
 	 * @return
 	 * @throws ClientProtocolException
 	 * @throws IOException
