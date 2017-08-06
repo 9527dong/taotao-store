@@ -23,7 +23,7 @@ import com.taotao.common.utils.CookieUtils;
 @Service
 public class CartCookieService {
 
-	private static String COOKIE_NAME = "TT_CART";
+	private static String CART_COOKIE_KEY = "TT_CART";
 	private static Integer COOKIE_TIME = 60 * 60 * 24 * 30 * 12;
 	private static final ObjectMapper MAPPER = new ObjectMapper();
 	@Autowired
@@ -72,14 +72,14 @@ public class CartCookieService {
 		}
 
 		// 将购物车列表数据写入到Cookie 中
-		CookieUtils.setCookie(request, response, COOKIE_NAME,
+		CookieUtils.setCookie(request, response, CART_COOKIE_KEY,
 				MAPPER.writeValueAsString(carts), COOKIE_TIME, true);
 	}
 
 	public List<Cart> querycartList(HttpServletRequest request)
 			throws Exception {
 		String jsonData = CookieUtils
-				.getCookieValue(request, COOKIE_NAME, true);
+				.getCookieValue(request, CART_COOKIE_KEY, true);
 		List<Cart> carts = null;
 		if (StringUtils.isEmpty(jsonData)) {
 			carts = new ArrayList<Cart>();
@@ -110,7 +110,7 @@ public class CartCookieService {
 			return;
 		}
 		// 将购物车列表数据写入到Cookie 中
-		CookieUtils.setCookie(request, response, COOKIE_NAME,
+		CookieUtils.setCookie(request, response, CART_COOKIE_KEY,
 				MAPPER.writeValueAsString(carts), COOKIE_TIME, true);
 
 	}
@@ -132,7 +132,7 @@ public class CartCookieService {
 			return;
 		}
 		// 将购物车列表数据写入到Cookie 中
-		CookieUtils.setCookie(request, response, COOKIE_NAME,
+		CookieUtils.setCookie(request, response, CART_COOKIE_KEY,
 				MAPPER.writeValueAsString(carts), COOKIE_TIME, true);
 
 	}
