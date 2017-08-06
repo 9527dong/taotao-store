@@ -79,12 +79,82 @@ public class RedisServicePro {
         });
     }
 
+    /**
+     * 设置生存时间
+     * @param key
+     * @param redisTime
+     * @return
+     */
     public Long expire(final String key, final Integer redisTime) {
 
         return this.execute(new Function<Long, ShardedJedis>() {
             @Override
             public Long callback(ShardedJedis shardedJedis) {
                 return shardedJedis.expire(key, redisTime);
+            }
+        });
+    }
+
+    /**
+     * Hash结构的获取值
+     * @param key Redis中的值的key值
+     * @param field Hash结构中的字段
+     * @return
+     */
+    public String hget(final String key, final String field) {
+
+        return this.execute(new Function<String, ShardedJedis>() {
+            @Override
+            public String callback(ShardedJedis shardedJedis) {
+                return shardedJedis.hget(key, field);
+            }
+        });
+    }
+
+    /**
+     * Hash结构的设置值并且设置生存时间
+     * @param key
+     * @param field
+     * @param value
+     * @param seconds
+     * @return
+     */
+    public Long hset(final String key, final String field, final String value, final Integer seconds) {
+
+        return this.execute(new Function<Long, ShardedJedis>() {
+            @Override
+            public Long callback(ShardedJedis shardedJedis) {
+                Long count = shardedJedis.hset(key, field, value);
+                //设置生存时间
+                shardedJedis.expire(key, seconds);
+                return count;
+            }
+        });
+    }
+
+    /**
+     * hsah结构的数据删除
+     * @param key
+     * @param field
+     * @return
+     */
+    public Long hdel(final String key, final String... field) {
+
+        return this.execute(new Function<Long, ShardedJedis>() {
+            @Override
+            public Long callback(ShardedJedis shardedJedis) {
+                return shardedJedis.hdel(key, field);
+
+            }
+        });
+    }
+
+    public void hgetAll(String key) {
+        return this.execute(new Function<Long, ShardedJedis>() {
+            @Override
+            public Long callback(ShardedJedis shardedJedis) {
+                return shardedJedis.hgetAll()
+
             }
         });
     }
