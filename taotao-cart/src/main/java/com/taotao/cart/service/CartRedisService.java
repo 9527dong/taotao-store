@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Dong on 2017/8/5.
@@ -42,7 +44,7 @@ public class CartRedisService {
         //判断商品是否存在购物车中
         String value = this.redisService.hget(key, String.valueOf(itemId));
         Cart cart = null;
-        if (value == null){
+        if (value == null) {
             //商品不存在
             //写入数据
             cart = new Cart();
@@ -55,7 +57,7 @@ public class CartRedisService {
             cart.setItemPrice(item.getPrice());
             cart.setItemImage(StringUtils.split(item.getImage(), ',')[0]);
             cart.setNum(1);// TODO 商品数量默认为1，需要修改
-        }else{
+        } else {
             //存在，数量增加
             try {
                 cart = MAPPER.readValue(value, Cart.class);
@@ -68,15 +70,38 @@ public class CartRedisService {
 
         }
         try {
-            this.redisService.hset(cartKey, itemIdStr, MAPPER.writeValueAsString(cart), CartController.COOKIE_TIME);
+            this.redisService.hset(key, itemIdStr, MAPPER.writeValueAsString(cart), CartController.COOKIE_TIME);
+            //记录数据的最后访问时间
+            this.redisService.hset(key, "updated", String.valueOf(System.currentTimeMillis()));
         } catch (JsonProcessingException e) {
             logger.error("加入 itemId = {} 到购物车失败", itemId);
             e.printStackTrace();
         }
     }
 
-    public List<Cart> getCartList(String cartKey){
+    /**
+     * 根据cartKey获取购物车商品列表
+     * @param cartKey
+     * @return
+     */
+    public List<Cart> getCartList(String cartKey) {
         String key = KEY_STR + cartKey;
-        this.redisService.hgetAll(key);
+        Map<String, String> map = this.redisService.hgetAll(key);
+        List<Cart> carts = new ArrayList<Cart>(map.size());
+        try {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                if (!StringUtils.equals(entry.getKey(), "updated")){
+                    carts.add(MAPPER.readValue(entry.getValue(), Cart.class));
+                }
+            }
+            this.redisService.expire(key,CartController.COOKIE_TIME);
+            //记录数据的最后访问时间
+            this.redisService.hset(key, "updated", String.valueOf(System.currentTimeMillis()));
+
+        } catch (IOException e) {
+            logger.error("查询购物车失败！cartKey = {}", cartKey, e);
+        }
+
+        return carts;
     }
 }
