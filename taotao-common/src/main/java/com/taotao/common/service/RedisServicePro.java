@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 
+import java.util.Map;
+
 @Service
 public class RedisServicePro {
 
@@ -131,7 +133,23 @@ public class RedisServicePro {
             }
         });
     }
+    /**
+     * Hash结构的设置值
+     * @param key
+     * @param field
+     * @param value
+     * @return
+     */
+    public Long hset(final String key, final String field, final String value) {
 
+        return this.execute(new Function<Long, ShardedJedis>() {
+            @Override
+            public Long callback(ShardedJedis shardedJedis) {
+                Long count = shardedJedis.hset(key, field, value);
+                return count;
+            }
+        });
+    }
     /**
      * hsah结构的数据删除
      * @param key
@@ -149,11 +167,16 @@ public class RedisServicePro {
         });
     }
 
-    public void hgetAll(String key) {
-        return this.execute(new Function<Long, ShardedJedis>() {
+    /**
+     * 根据key获取hash的值
+     * @param key
+     * @return
+     */
+    public Map<String, String> hgetAll(final String key) {
+        return this.execute(new Function<Map<String, String>, ShardedJedis>() {
             @Override
-            public Long callback(ShardedJedis shardedJedis) {
-                return shardedJedis.hgetAll()
+            public Map<String, String> callback(ShardedJedis shardedJedis) {
+                return shardedJedis.hgetAll(key);
 
             }
         });
